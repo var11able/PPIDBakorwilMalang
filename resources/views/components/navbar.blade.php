@@ -1,21 +1,14 @@
-<nav class="bg-[#417BFD]" x-data="{isOpen: false}">
+<nav class="bg-primary" x-data="{isOpen: false}">
     <div class="mx-auto max-w-7xl px-4 sm:px-12 lg:px-8">
         <div class="flex h-16 items-center justify-between">
             <!-- Logo -->
             <div class="flex items-center">
                 <div class="shrink-0">
-                    <svg class="size-8 mx-2" viewBox="0 0 38 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g clip-path="url(#clip0_575_1133)">
-                        <path d="M0.107007 2.36523L0.0798765 9.11813C0.0716134 11.1749 2.5733 12.2818 4.11059 10.8483L11.4472 4.12475C13.0542 2.6572 12.0205 0.0478254 9.82763 0.0390154L2.51818 0.00964897C1.19552 0.00433505 0.11224 1.06264 0.107007 2.36523Z" fill="white"/>
-                        <path d="M34.7144 0.138996L27.405 0.10963C25.247 0.10096 24.1575 2.7018 25.7527 4.18222L33.035 10.9645C34.5608 12.3761 37.0712 11.3235 37.0795 9.26678L37.1066 2.51387C37.1118 1.21128 36.0371 0.14431 34.7144 0.138996Z" fill="white"/>
-                        <path d="M20.2034 16.569L32.9647 28.4809C34.4905 29.8925 37.0009 28.8399 37.0092 26.7832L37.0366 19.9617C37.0392 19.3104 36.7632 18.6923 36.2777 18.2447L20.2569 3.26886C19.3205 2.40812 17.8934 2.40238 16.9502 3.25557L0.809517 18.1022C0.320431 18.5459 0.0394968 19.1618 0.0368801 19.8131L0.00947422 26.6345C0.00121113 28.6912 2.5029 29.7982 4.04019 28.3647L16.8968 16.5557C17.84 15.7025 19.2671 15.7082 20.2034 16.569Z" fill="white"/>
-                        </g>
-                        <defs>
-                        <clipPath id="clip0_575_1133">
-                        <rect width="37" height="29" fill="white" transform="translate(0.11651) rotate(0.230191)"/>
-                        </clipPath>
-                        </defs>
-                    </svg>
+                    <img 
+                        src="img/jatim.png" 
+                        alt="jatim-logo"
+                        class="w-[38px] mt-2"
+                    >
                 </div>
             </div>
 
@@ -50,7 +43,7 @@
 
             <!-- Sign In Button (Desktop) -->
             <div class="hidden md:block">
-                <button class="bg-yellow-300 hover:bg-yellow-400 text-blue-600 font-semibold px-6 py-2 rounded-md text-sm">
+                <button type="button" class="bg-[#FFE492] hover:bg-yellow-400 text-blue-600 font-semibold px-6 py-2 rounded-md text-sm cursor-pointer">
                     Sign In
                 </button>
             </div>
