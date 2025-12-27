@@ -1,11 +1,11 @@
-<nav class="bg-primary" x-data="{isOpen: false}">
+<nav class="bg-primary" x-data="{ isOpen: false }">
     <div class="mx-auto max-w-7xl px-4 sm:px-12 lg:px-8">
         <div class="flex h-16 items-center justify-between">
             <!-- Logo -->
             <div class="flex items-center">
                 <div class="shrink-0">
                     <img 
-                        src="img/jatim.png" 
+                        src="{{ asset('img/jatim.png') }}" 
                         alt="jatim-logo"
                         class="w-[38px] mt-2"
                     >
@@ -13,32 +13,34 @@
             </div>
 
             <!-- Desktop Menu -->
-            <div class="hidden md:flex md:items-center md:space-x-1">
-                <a href="#" class="text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium">Beranda</a>
-                
-                <!-- Dropdown Profil -->
-                <div class="relative" x-data="{open: false}">
-                    <button @click="open = !open" class="text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium flex items-center">
-                        Profil
-                        <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                        </svg>
-                    </button>
-                    <div x-show="open" @click.away="open = false" class="absolute left-0 mt-2 w-56 bg-white rounded-md shadow-lg z-10">
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Regulasi</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Seputar PPID</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Visi dan Misi PPID</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Tugas/Fungsi dan Kewenangan PPID</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Standar Pelayanan PPID</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Standar Pengelolaan Keberatan</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">SOP PPID</a>
-                    </div>
-                </div>
-
-                <a href="#" class="text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium">Tata Cara</a>
-                <a href="#" class="text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium">Layanan Informasi</a>
-                <a href="#" class="text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium">Laporan PPID</a>
-                <a href="#" class="text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium">Web Utama</a>
+            <div class="hidden md:flex md:items-center md:space-x-2">
+                @foreach(config('navigation.main') as $item)
+                    @if($item['type'] === 'link')
+                        <x-nav-link href="{{ $item['url'] }}" :active="request()->is($item['url'])">
+                            {{ $item['label'] }}
+                        </x-nav-link>
+                    @elseif($item['type'] === 'dropdown')
+                        <div class="relative" x-data="{ isOpen: false }">
+                            <button @click="isOpen = !isOpen" class="text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium flex items-center">
+                                {{ $item['label'] }}
+                                <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </button>
+                            <div x-show="isOpen" x-cloak @click.away="isOpen = false" class="absolute left-0 mt-2 w-56 bg-white rounded-md shadow-lg z-10">
+                                @foreach($item['items'] as $subItem)
+                                    <x-nav-link 
+                                        href="{{ url($item['prefix'] . '/' . $subItem['slug']) }}"
+                                        :active="request()->is($subItem['slug'])"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                                    >
+                                        {{ $subItem['label'] }}
+                                    </x-nav-link>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+                @endforeach
             </div>
 
             <!-- Sign In Button (Desktop) -->
@@ -65,37 +67,40 @@
     <!-- Mobile menu -->
     <div x-show="isOpen" class="md:hidden bg-[#417BFD]">
         <div class="px-2 pt-2 pb-3 space-y-1">
-            <a href="#" class="text-white hover:bg-white/10 block px-3 py-2 rounded-md text-base font-medium">Beranda</a>
-            
-            <!-- Mobile Dropdown -->
-            <div x-data="{openMobile: false}">
-                <button @click="openMobile = !openMobile" class="text-white hover:bg-white/10 w-full text-left px-3 py-2 rounded-md text-base font-medium flex items-center justify-between">
-                    Profil
-                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                    </svg>
-                </button>
-                <div x-show="openMobile" class="pl-4">
-                    <a href="#" class="text-white hover:bg-white/10 block px-3 py-2 rounded-md text-sm">Regulasi</a>
-                    <a href="#" class="text-white hover:bg-white/10 block px-3 py-2 rounded-md text-sm">Seputar PPID</a>
-                    <a href="#" class="text-white hover:bg-white/10 block px-3 py-2 rounded-md text-sm">Visi dan Misi PPID</a>
-                    <a href="#" class="text-white hover:bg-white/10 block px-3 py-2 rounded-md text-sm">Tugas/Fungsi dan Kewenangan PPID</a>
-                    <a href="#" class="text-white hover:bg-white/10 block px-3 py-2 rounded-md text-sm">Standar Pelayanan PPID</a>
-                    <a href="#" class="text-white hover:bg-white/10 block px-3 py-2 rounded-md text-sm">Standar Pengelolaan Keberatan</a>
-                    <a href="#" class="text-white hover:bg-white/10 block px-3 py-2 rounded-md text-sm">SOP PPID</a>
-                </div>
-            </div>
+            @foreach(config('navigation.main') as $item)
+                @if($item['type'] === 'link')
+                    <x-nav-link href="{{ $item['url'] }}" :active="request()->is('/')">
+                        {{ $item['label'] }}
+                    </x-nav-link>
+                @elseif($item['type'] === 'dropdown')
+                    <div class="relative" x-data="{ isOpen: false }">
+                        <button @click="isOpen = !isOpen" class="text-white hover:bg-white/10 w-full text-left px-3 py-2 rounded-md text-base font-medium flex items-center justify-between">
+                            {{ $item['label'] }}
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div x-show="isOpen" x-cloak @click.away="isOpen = false" class="pl-4">
+                            @foreach($item['items'] as $subItem)
+                                <x-nav-link 
+                                    href="{{ url('profil/' . $subItem['slug']) }}"
+                                    :active="request()->is($subItem['slug'])"
+                                    class="text-white hover:bg-white/10 block px-3 py-2 rounded-md text-sm"
+                                >
+                                    {{ $subItem['label'] }}
+                                </x-nav-link>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+            @endforeach
 
-            <a href="#" class="text-white hover:bg-white/10 block px-3 py-2 rounded-md text-base font-medium">Tata Cara</a>
-            <a href="#" class="text-white hover:bg-white/10 block px-3 py-2 rounded-md text-base font-medium">Layanan Informasi</a>
-            <a href="#" class="text-white hover:bg-white/10 block px-3 py-2 rounded-md text-base font-medium">Laporan PPID</a>
-            <a href="#" class="text-white hover:bg-white/10 block px-3 py-2 rounded-md text-base font-medium">Web Utama</a>
-            
             <div class="pt-4">
                 <button class="bg-yellow-300 hover:bg-yellow-400 text-blue-600 font-semibold px-6 py-2 rounded-md text-sm w-full">
                     Sign In
                 </button>
             </div>
+            
         </div>
     </div>
 </nav>
