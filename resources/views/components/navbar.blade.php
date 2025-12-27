@@ -65,7 +65,7 @@
     </div>
 
     <!-- Mobile menu -->
-    <div x-show="isOpen" class="md:hidden bg-[#417BFD]">
+    <div x-show="isOpen" class="md:hidden bg-primary">
         <div class="px-2 pt-2 pb-3 space-y-1">
             @foreach(config('navigation.main') as $item)
                 @if($item['type'] === 'link')
