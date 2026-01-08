@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index() {
-        $contents = Content::all();
+    public function index()
+    {
+        $contents = collect([]);
 
         return view('home', [
             'contents' => $contents
