@@ -13,7 +13,7 @@
             </div>
 
             <!-- Desktop Menu -->
-            <div class="hidden md:flex md:items-center md:space-x-2">
+            <div class="hidden lg:flex lg:items-center lg:space-x-2">
                 @foreach(config('navigation.main') as $item)
                     @if($item['type'] === 'link')
                         <x-nav-link href="{{ $item['url'] }}" :active="request()->is($item['url'])">
@@ -44,14 +44,14 @@
             </div>
 
             <!-- Sign In Button (Desktop) -->
-            <div class="hidden md:block">
-                <button type="button" class="bg-[#FFE492] hover:bg-yellow-400 text-blue-600 font-semibold px-6 py-2 rounded-md text-sm cursor-pointer">
+            <div class="hidden lg:block">
+                <a href="/login" class="bg-[#FFE492] hover:bg-yellow-400 text-blue-600 font-semibold px-6 py-3 rounded-md text-sm cursor-pointer">
                     Sign In
-                </button>
+                </a>
             </div>
 
             <!-- Mobile menu button -->
-            <div class="flex md:hidden">
+            <div class="flex lg:hidden">
                 <button @click="isOpen = !isOpen" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-white hover:bg-white/10 focus:outline-none">
                     <svg x-show="!isOpen" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
@@ -65,11 +65,11 @@
     </div>
 
     <!-- Mobile menu -->
-    <div x-show="isOpen" class="md:hidden bg-primary">
+    <div x-show="isOpen" x-cloak class="lg:hidden bg-primary">
         <div class="px-2 pt-2 pb-3 space-y-1">
             @foreach(config('navigation.main') as $item)
                 @if($item['type'] === 'link')
-                    <x-nav-link href="{{ $item['url'] }}" :active="request()->is('/')">
+                    <x-nav-link href="{{ $item['url'] }}" :active="request()->is($item['url'])">
                         {{ $item['label'] }}
                     </x-nav-link>
                 @elseif($item['type'] === 'dropdown')
@@ -83,7 +83,7 @@
                         <div x-show="isOpen" x-cloak @click.away="isOpen = false" class="pl-4">
                             @foreach($item['items'] as $subItem)
                                 <x-nav-link 
-                                    href="{{ url('profil/' . $subItem['slug']) }}"
+                                    href="{{ url($item['prefix'] . '/' . $subItem['slug']) }}"
                                     :active="request()->is($subItem['slug'])"
                                     class="text-white hover:bg-white/10 block px-3 py-2 rounded-md text-sm"
                                 >
@@ -96,9 +96,9 @@
             @endforeach
 
             <div class="pt-4">
-                <button class="bg-yellow-300 hover:bg-yellow-400 text-blue-600 font-semibold px-6 py-2 rounded-md text-sm w-full">
+                <a href="/login" class="bg-yellow-300 hover:bg-yellow-400 text-blue-600 font-semibold px-6 py-2 rounded-md text-sm w-full block text-center">
                     Sign In
-                </button>
+                </a>
             </div>
             
         </div>
