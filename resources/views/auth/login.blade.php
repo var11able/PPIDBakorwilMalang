@@ -1,6 +1,6 @@
-<x-layout>
+<x-layout.app>
     <form 
-        action="" 
+        action="{{ route('login') }}" 
         method="POST" 
         class="bg-white p-4 m-5 rounded-xl shadow-lg max-w-md sm:mx-auto"
     >
@@ -9,14 +9,22 @@
         <h2 class="text-center text-2xl font-bold mb-2">
             Login
         </h2>
-        <p class="text-center text-xs text-gray-500">
+        <p class="text-center text-xs text-gray-500 mb-3">
             Don't have an account?
             <span class="text-link font-semibold active:underline hover:underline">
-                <a href="/register">
+                <a href="{{ route('show.register') }}">
                     Sign Up
                 </a>
             </span>
         </p>
+
+        @if ($errors->any())
+            <ul class="px-4 py-2 bg-red-100">
+                @foreach ( $errors->all() as $error )
+                    <li class="my-2 text-red-500">{{ $error }}</li>
+                @endforeach
+            </ul>
+        @endif
 
         <div class="my-3">
             <label 
@@ -70,12 +78,11 @@
             </div>
         </div>
 
-
         <div class="flex justify-between items-center mb-6">
             <div class="flex items-center space-x-1">
-                <input type="checkbox" name="rememberMe" id="rememberMe">
+                <input type="checkbox" name="remember" id="remember" class="cursor-pointer">
                 <label 
-                    for="rememberMe"
+                    for="remember"
                     class="text-sm text-gray-600"
                 >Remember me
                 </label>
@@ -94,7 +101,5 @@
         >Log In
         </button>
 
-        {{-- error message dibawah --}}
-
     </form>
-</x-layout>
+</x-layout.app>

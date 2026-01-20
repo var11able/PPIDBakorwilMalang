@@ -1,3 +1,3 @@
-<x-layout>
+<x-layout.app>
     <!-- gambar e endii -->
-</x-layout>
+</x-layout.app>

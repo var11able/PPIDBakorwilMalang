@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout.app>
     <div class="min-h-screen bg-primary py-8 px-4 sm:px-6 lg:px-8">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-8">
@@ -22,4 +22,4 @@
 
         </div>
     </div>
-</x-layout>
+</x-layout.app>

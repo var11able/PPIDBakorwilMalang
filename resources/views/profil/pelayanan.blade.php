@@ -1,3 +1,5 @@
-<x-layout>
+<x-layout.app>
     <!-- embo gambar e endi -->
-</x-layout>
+
+    {{-- mboh yo --}}
+</x-layout.app>

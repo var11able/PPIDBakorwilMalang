@@ -1,3 +1,3 @@
-<x-layout>
+<x-layout.app>
     lhkpn
-</x-layout>
+</x-layout.app>

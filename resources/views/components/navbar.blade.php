@@ -21,7 +21,7 @@
                         </x-nav-link>
                     @elseif($item['type'] === 'dropdown')
                         <div class="relative" x-data="{ isOpen: false }">
-                            <button @click="isOpen = !isOpen" class="text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium flex items-center">
+                            <button @click="isOpen = !isOpen" class="text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium flex items-center cursor-pointer">
                                 {{ $item['label'] }}
                                 <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
@@ -44,11 +44,38 @@
             </div>
 
             <!-- Sign In Button (Desktop) -->
-            <div class="hidden lg:block">
-                <a href="/login" class="bg-[#FFE492] hover:bg-yellow-400 text-blue-600 font-semibold px-6 py-3 rounded-md text-sm cursor-pointer">
-                    Sign In
-                </a>
-            </div>
+            @guest  
+                <div class="hidden lg:block">
+                    <a href="{{ route('login') }}" class="bg-[#FFE492] hover:bg-yellow-300 active:bg-yellow-200 text-blue-600 font-semibold px-6 py-3 rounded-md text-sm cursor-pointer">
+                        Sign In
+                    </a>
+                </div>
+            @endguest
+
+            @auth
+                <div class="hidden lg:block relative" x-data="{ isOpen: false }">
+                    <button @click="isOpen = !isOpen" class="text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium flex items-center cursor-pointer">
+                        <span class="font-semibold text-sm">
+                            Selamat Datang, {{ Auth::user()->firstName }}
+                        </span>
+                        <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div x-show="isOpen" x-cloak @click.away="isOpen = false" class="absolute right-0 mt-2 w-full bg-white rounded-md shadow-lg z-10">
+                        <x-nav-link>
+                            <form 
+                                action="{{ route('logout') }}"
+                                method="POST"
+                                class="px-4 py-2 text-base text-gray-700 hover:bg-gray-100"
+                            >
+                            @csrf
+                            <button type="submit" class="text-red-500 cursor-pointer">Logout</button>
+                            </form>
+                        </x-nav-link>
+                    </div>
+                </div>
+            @endauth
 
             <!-- Mobile menu button -->
             <div class="flex lg:hidden">
@@ -95,11 +122,38 @@
                 @endif
             @endforeach
 
-            <div class="pt-4">
-                <a href="/login" class="bg-yellow-300 hover:bg-yellow-400 text-blue-600 font-semibold px-6 py-2 rounded-md text-sm w-full block text-center">
-                    Sign In
-                </a>
-            </div>
+            @guest 
+                <div class="pt-4">
+                    <a href="{{ route('login') }}" class="bg-[#FFE492] active:bg-yellow-300 text-blue-600 font-semibold px-6 py-2 rounded-md text-sm w-full block text-center">
+                        Sign In
+                    </a>
+                </div>
+            @endguest
+
+            @auth
+                <div class="hidden lg:block relative" x-data="{ isOpen: false }">
+                    <button @click="isOpen = !isOpen" class="text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium flex items-center cursor-pointer">
+                        <span class="font-semibold text-base">
+                            Selamat Datang, {{ Auth::user()->firstName }}
+                        </span>
+                        <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                    <div x-show="isOpen" x-cloak @click.away="isOpen = false" class="absolute right-0 mt-2 w-56 bg-white rounded-md shadow-lg z-10">
+                        <x-nav-link>
+                            <form 
+                                action="{{ route('logout') }}"
+                                method="POST"
+                                class="px-4 py-2 text-base text-gray-700 hover:bg-gray-100"
+                            >
+                            @csrf
+                            <button type="submit" class="text-red-500 cursor-pointer">Logout</button>
+                            </form>
+                        </x-nav-link>
+                    </div>
+                </div>
+            @endauth
             
         </div>
     </div>

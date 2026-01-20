@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout.app>
     <form 
         action="" 
         method="POST" 
@@ -12,14 +12,44 @@
         <p class="text-center text-xs text-gray-500">
             Already have an account?
             <span class="text-link font-semibold active:underline hover:underline">
-                <a href="/register">
+                <a href="{{ route('show.login') }}">
                     Sign In
                 </a>
             </span>
         </p>
 
         <div class="my-3">
-            <label 
+            <label
+                for="first_name" 
+                class="text-sm block text-gray-600 mb-1"
+            >Nama Depan
+            </label>
+            <input 
+                type="text"
+                name="first_name"
+                required
+                placeholder="Budi"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            >
+        </div>
+
+        <div class="my-3">
+            <label
+                for="last_name" 
+                class="text-sm block text-gray-600 mb-1"
+            >Nama Belakang
+            </label>
+            <input 
+                type="text"
+                name="last_name"
+                required
+                placeholder="Suharto"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            >
+        </div>
+
+        <div class="my-3">
+            <label
                 for="email" 
                 class="text-sm block text-gray-600 mb-1"
             >Email
@@ -70,31 +100,37 @@
             </div>
         </div>
 
+        <div 
+            class="my-3"
+        >
+            <label 
+                for="password" 
+                class="text-sm block text-gray-600 mb-1"
+            >Confirm Password
+            </label>
+            <input
+                type="password"
+                name="password"
+                required
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            >
+        </div>
 
-        <div class="flex justify-between items-center mb-6">
-            <div class="flex items-center space-x-1">
-                <input type="checkbox" name="rememberMe" id="rememberMe">
-                <label 
-                    for="rememberMe"
-                    class="text-sm text-gray-600"
-                >Remember me
-                </label>
-            </div>
-
-            <a 
-                href="#"
-                class="text-xs text-link font-semibold active:underline hover:underline"
-            >Forgot Password ?
-            </a>
+        <div class="my-5 flex items-start space-x-2 mb-7">
+            <input type="checkbox" name="agreement" id="agreement" class="cursor-pointer mt-1">
+            <label
+                for="agreement"
+                class="text-sm text-gray-500 leading-relaxed"
+            >
+                Saya memberikan persetujuan kepada pengelola PPID untuk memproses data pribadi saya terbatas pada tujuan layanan informasi publik.
+            </label>
         </div>
 
         <button 
             type="submit"
             class="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-500 text-white text-sm font-semibold py-2 rounded-lg transition-colors duration-200 mb-3 cursor-pointer"
-        >Log In
+        >Register Account
         </button>
 
-        {{-- error message dibawah --}}
-
     </form>
-</x-layout>
+</x-layout.app>

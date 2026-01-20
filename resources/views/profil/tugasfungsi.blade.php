@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout.app>
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-8 md:mb-12 break-words">
             Tugas dan Fungsi PPID
@@ -66,4 +66,4 @@
 
         </div>
     </div>
-</x-layout>
+</x-layout.app>
