@@ -12,10 +12,11 @@ Route::get('{prefix}/{slug}', [PageController::class, 'show']);
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::middleware('guest')->controller(AuthController::class)->group(function() {
+Route::middleware('guest')->controller(AuthController::class)->group(function () {
     Route::get('/login', 'showLogin')->name('show.login');
     Route::post('/login', 'login')->name('login');
     Route::get('/register', 'showRegister')->name('show.register');
+    Route::post('/register', 'register')->name('register');
 });
 
 Route::get('/permohonan', [RequestController::class, 'create'])->middleware('auth')->name('request');

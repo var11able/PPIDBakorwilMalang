@@ -4,11 +4,7 @@
             <!-- Logo -->
             <div class="flex items-center">
                 <div class="shrink-0">
-                    <img 
-                        src="{{ asset('img/jatim.png') }}" 
-                        alt="jatim-logo"
-                        class="w-[38px] mt-2"
-                    >
+                    <img src="{{ asset('img/jatim.png') }}" alt="jatim-logo" class="w-[38px] mt-2">
                 </div>
             </div>
 
@@ -21,19 +17,19 @@
                         </x-nav-link>
                     @elseif($item['type'] === 'dropdown')
                         <div class="relative" x-data="{ isOpen: false }">
-                            <button @click="isOpen = !isOpen" class="text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium flex items-center cursor-pointer">
+                            <button @click="isOpen = !isOpen"
+                                class="text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium flex items-center cursor-pointer">
                                 {{ $item['label'] }}
                                 <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                                 </svg>
                             </button>
-                            <div x-show="isOpen" x-cloak @click.away="isOpen = false" class="absolute left-0 mt-2 w-56 bg-white rounded-md shadow-lg z-10">
+                            <div x-show="isOpen" x-cloak @click.away="isOpen = false"
+                                class="absolute left-0 mt-2 w-56 bg-white rounded-md shadow-lg z-10">
                                 @foreach($item['items'] as $subItem)
-                                    <x-nav-link 
-                                        href="{{ url($item['prefix'] . '/' . $subItem['slug']) }}"
+                                    <x-nav-link href="{{ url($item['prefix'] . '/' . $subItem['slug']) }}"
                                         :active="request()->is($subItem['slug'])"
-                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                    >
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                         {{ $subItem['label'] }}
                                     </x-nav-link>
                                 @endforeach
@@ -44,9 +40,10 @@
             </div>
 
             <!-- Sign In Button (Desktop) -->
-            @guest  
+            @guest
                 <div class="hidden lg:block">
-                    <a href="{{ route('login') }}" class="bg-[#FFE492] hover:bg-yellow-300 active:bg-yellow-200 text-blue-600 font-semibold px-6 py-3 rounded-md text-sm cursor-pointer">
+                    <a href="{{ route('login') }}"
+                        class="bg-[#FFE492] hover:bg-yellow-300 active:bg-yellow-200 text-blue-600 font-semibold px-6 py-3 rounded-md text-sm cursor-pointer">
                         Sign In
                     </a>
                 </div>
@@ -54,23 +51,22 @@
 
             @auth
                 <div class="hidden lg:block relative" x-data="{ isOpen: false }">
-                    <button @click="isOpen = !isOpen" class="text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium flex items-center cursor-pointer">
+                    <button @click="isOpen = !isOpen"
+                        class="text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium flex items-center cursor-pointer">
                         <span class="font-semibold text-sm">
                             Selamat Datang, {{ Auth::user()->firstName }}
                         </span>
                         <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
-                    <div x-show="isOpen" x-cloak @click.away="isOpen = false" class="absolute right-0 mt-2 w-full bg-white rounded-md shadow-lg z-10">
+                    <div x-show="isOpen" x-cloak @click.away="isOpen = false"
+                        class="absolute right-0 mt-2 w-full bg-white rounded-md shadow-lg z-10">
                         <x-nav-link>
-                            <form 
-                                action="{{ route('logout') }}"
-                                method="POST"
-                                class="px-4 py-2 text-base text-gray-700 hover:bg-gray-100"
-                            >
-                            @csrf
-                            <button type="submit" class="text-red-500 cursor-pointer">Logout</button>
+                            <form action="{{ route('logout') }}" method="POST"
+                                class="px-4 py-2 text-base text-gray-700 hover:bg-gray-100">
+                                @csrf
+                                <button type="submit" class="text-red-500 cursor-pointer">Logout</button>
                             </form>
                         </x-nav-link>
                     </div>
@@ -79,12 +75,15 @@
 
             <!-- Mobile menu button -->
             <div class="flex lg:hidden">
-                <button @click="isOpen = !isOpen" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-white hover:bg-white/10 focus:outline-none">
+                <button @click="isOpen = !isOpen" type="button"
+                    class="inline-flex items-center justify-center p-2 rounded-md text-white hover:bg-white/10 focus:outline-none">
                     <svg x-show="!isOpen" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                     <svg x-show="isOpen" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
@@ -101,19 +100,18 @@
                     </x-nav-link>
                 @elseif($item['type'] === 'dropdown')
                     <div class="relative" x-data="{ isOpen: false }">
-                        <button @click="isOpen = !isOpen" class="text-white hover:bg-white/10 w-full text-left px-3 py-2 rounded-md text-base font-medium flex items-center justify-between">
+                        <button @click="isOpen = !isOpen"
+                            class="text-white hover:bg-white/10 w-full text-left px-3 py-2 rounded-md text-base font-medium flex items-center justify-between">
                             {{ $item['label'] }}
                             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                             </svg>
                         </button>
                         <div x-show="isOpen" x-cloak @click.away="isOpen = false" class="pl-4">
                             @foreach($item['items'] as $subItem)
-                                <x-nav-link 
-                                    href="{{ url($item['prefix'] . '/' . $subItem['slug']) }}"
+                                <x-nav-link href="{{ url($item['prefix'] . '/' . $subItem['slug']) }}"
                                     :active="request()->is($subItem['slug'])"
-                                    class="text-white hover:bg-white/10 block px-3 py-2 rounded-md text-sm"
-                                >
+                                    class="text-white hover:bg-white/10 block px-3 py-2 rounded-md text-sm">
                                     {{ $subItem['label'] }}
                                 </x-nav-link>
                             @endforeach
@@ -122,9 +120,10 @@
                 @endif
             @endforeach
 
-            @guest 
+            @guest
                 <div class="pt-4">
-                    <a href="{{ route('login') }}" class="bg-[#FFE492] active:bg-yellow-300 text-blue-600 font-semibold px-6 py-2 rounded-md text-sm w-full block text-center">
+                    <a href="{{ route('login') }}"
+                        class="bg-[#FFE492] active:bg-yellow-300 text-blue-600 font-semibold px-6 py-2 rounded-md text-sm w-full block text-center">
                         Sign In
                     </a>
                 </div>
@@ -132,29 +131,28 @@
 
             @auth
                 <div class="hidden lg:block relative" x-data="{ isOpen: false }">
-                    <button @click="isOpen = !isOpen" class="text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium flex items-center cursor-pointer">
+                    <button @click="isOpen = !isOpen"
+                        class="text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium flex items-center cursor-pointer">
                         <span class="font-semibold text-base">
                             Selamat Datang, {{ Auth::user()->firstName }}
                         </span>
                         <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
-                    <div x-show="isOpen" x-cloak @click.away="isOpen = false" class="absolute right-0 mt-2 w-56 bg-white rounded-md shadow-lg z-10">
+                    <div x-show="isOpen" x-cloak @click.away="isOpen = false"
+                        class="absolute right-0 mt-2 w-56 bg-white rounded-md shadow-lg z-10">
                         <x-nav-link>
-                            <form 
-                                action="{{ route('logout') }}"
-                                method="POST"
-                                class="px-4 py-2 text-base text-gray-700 hover:bg-gray-100"
-                            >
-                            @csrf
-                            <button type="submit" class="text-red-500 cursor-pointer">Logout</button>
+                            <form action="{{ route('logout') }}" method="POST"
+                                class="px-4 py-2 text-base text-gray-700 hover:bg-gray-100">
+                                @csrf
+                                <button type="submit" class="text-red-500 cursor-pointer">Logout</button>
                             </form>
                         </x-nav-link>
                     </div>
                 </div>
             @endauth
-            
+
         </div>
     </div>
 </nav>
