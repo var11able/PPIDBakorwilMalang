@@ -22,16 +22,13 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validated = $request->validate([
-            'firstName' => 'required|string|max:20',
-            'lastName' => 'required|string|max:20',
+            'fullName' => 'required|string|max:40',
             'email' => 'required|email|max:50|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
             'agreement' => 'accepted',
         ], [
-            'firstName.required' => 'Nama depan wajib diisi.',
-            'firstName.max' => 'Nama depan maksimal 20 karakter.',
-            'lastName.required' => 'Nama belakang wajib diisi.',
-            'lastName.max' => 'Nama belakang maksimal 20 karakter.',
+            'fullName.required' => 'Nama lengkap wajib diisi.',
+            'fullName.max' => 'Nama depan maksimal 40 karakter.',
             'email.required' => 'Email wajib diisi.',
             'email.email' => 'Format email tidak valid.',
             'email.unique' => 'Email sudah terdaftar.',
@@ -42,8 +39,7 @@ class AuthController extends Controller
         ]);
 
         $user = User::create([
-            'firstName' => $validated['firstName'],
-            'lastName' => $validated['lastName'],
+            'fullName' => $validated['fullName'],
             'email' => $validated['email'],
             'password' => $validated['password'],
         ]);
@@ -68,7 +64,7 @@ class AuthController extends Controller
         }
 
         throw ValidationException::withMessages([
-            'credentials' => 'Maaf Salah, Izinnn 🙏'
+            'credentials' => 'Username atau password salah. Silakan coba lagi.'
         ]);
     }
 

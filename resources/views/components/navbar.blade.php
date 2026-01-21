@@ -4,7 +4,11 @@
             <!-- Logo -->
             <div class="flex items-center">
                 <div class="shrink-0">
-                    <img src="{{ asset('img/jatim.png') }}" alt="jatim-logo" class="w-[38px] mt-2">
+                    <img 
+                        src="{{ asset('img/jatim.png') }}" 
+                        alt="jatim-logo" 
+                        class="w-[38px] mt-2"
+                    >
                 </div>
             </div>
 
@@ -17,10 +21,18 @@
                         </x-nav-link>
                     @elseif($item['type'] === 'dropdown')
                         <div class="relative" x-data="{ isOpen: false }">
-                            <button @click="isOpen = !isOpen"
-                                class="text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium flex items-center cursor-pointer">
+                            <button 
+                                @click="isOpen = !isOpen"
+                                class="text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium flex items-center cursor-pointer"
+                            >
                                 {{ $item['label'] }}
-                                <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg 
+                                    class="ml-1 h-4 w-4 transition-transform duration-200" 
+                                    fill="none" 
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    :class="{ 'rotate-180': isOpen }"
+                                >
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                                 </svg>
                             </button>
@@ -54,7 +66,7 @@
                     <button @click="isOpen = !isOpen"
                         class="text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium flex items-center cursor-pointer">
                         <span class="font-semibold text-sm">
-                            Selamat Datang, {{ Auth::user()->firstName }}
+                            SELAMAT DATANG, {{ Auth::user()->fullName }}
                         </span>
                         <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -134,7 +146,7 @@
                     <button @click="isOpen = !isOpen"
                         class="text-white hover:bg-white/10 px-3 py-2 rounded-md text-sm font-medium flex items-center cursor-pointer">
                         <span class="font-semibold text-base">
-                            Selamat Datang, {{ Auth::user()->firstName }}
+                            SELAMAT DATANG, {{ Auth::user()->firstName }}
                         </span>
                         <svg class="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />

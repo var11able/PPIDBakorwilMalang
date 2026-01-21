@@ -24,18 +24,10 @@
         @endif
 
         <div class="my-3">
-            <label for="firstName" class="text-sm block text-gray-600 mb-1">Nama Depan
+            <label for="fullName" class="text-sm block text-gray-600 mb-1">Nama Lengkap
             </label>
-            <input type="text" name="firstName" id="firstName" required value="{{ old('firstName') }}"
-                placeholder="Budi"
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-        </div>
-
-        <div class="my-3">
-            <label for="lastName" class="text-sm block text-gray-600 mb-1">Nama Belakang
-            </label>
-            <input type="text" name="lastName" id="lastName" required value="{{ old('lastName') }}"
-                placeholder="Suharto"
+            <input type="text" name="fullName" id="fullName" required value="{{ old('fullName') }}"
+                placeholder="Masukkan nama lengkap sesuai KTP"
                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
         </div>
 
