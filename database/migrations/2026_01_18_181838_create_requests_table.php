@@ -13,6 +13,18 @@ return new class extends Migration
     {
         Schema::create('requests', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')
+                ->constrained()
+                ->cascadeOnDelete();
+            $table->enum('request_type', ['permohonan', 'keberatan']);
+            $table->string('identity_proof');
+            $table->string('address', 50);
+            $table->string('institution');
+            $table->string('proof_institution');
+            $table->text('data_request');
+            $table->string('phone_number', 20);
+            $table->text('complaint')->nullable();
+            $table->enum('status', ['pending', 'diproses', 'disetujui', 'ditolak']);
             $table->timestamps();
         });
     }

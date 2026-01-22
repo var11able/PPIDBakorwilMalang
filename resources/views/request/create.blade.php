@@ -34,7 +34,12 @@
                     </div>
                 </div>
 
-                <form action="" method="POST" enctype="multipart/form-data">
+                <form 
+                    action="" 
+                    method="POST" 
+                    enctype="multipart/form-data"
+                    class="dropzone"
+                >
                     @csrf
 
                     {{-- Nama Lengkap --}}
@@ -43,22 +48,15 @@
                             Nama Lengkap <span class="text-red-500">*</span>
                         </label>
                         <input 
-                            type="text" 
+                            type="text"
                             name="nama_lengkap" 
                             id="nama_lengkap"
                             required
-                            value="{{ old('nama_lengkap') }}"
-                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 @error('nama_lengkap') border-red-500 @enderror"
+                            value="{{ Auth::user()->fullName }}"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none transition duration-200 bg-gray-200 text-gray-600 cursor-not-allowed"
                             placeholder="Masukkan nama lengkap sesuai KTP"
+                            readonly
                         >
-                        @error('nama_lengkap')
-                            <p class="text-red-500 text-xs mt-1 flex items-center">
-                                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
-                                </svg>
-                                {{ $message }}
-                            </p>
-                        @enderror
                     </div>
 
                     {{-- Bukti Identitas --}}
@@ -71,12 +69,12 @@
                                 <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
                                     <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
-                                <div class="flex text-sm text-gray-600">
+                                <div class="flex justify-center text-sm text-gray-600">
                                     <label for="bukti_identitas" class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
                                         <span>Upload file</span>
                                         <input 
                                             id="bukti_identitas" 
-                                            name="bukti_identitas" 
+                                            name="bukti_identitas"
                                             type="file" 
                                             class="sr-only"
                                             accept="image/*"
@@ -106,7 +104,7 @@
                             Asal Instansi <span class="text-red-500">*</span>
                         </label>
                         <input 
-                            type="text" 
+                            type="text"
                             name="asal_instansi" 
                             id="asal_instansi"
                             required
@@ -134,7 +132,7 @@
                                 <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
                                     <path d="M8 14v20c0 4.418 7.163 8 16 8 1.381 0 2.721-.087 4-.252M8 14c0 4.418 7.163 8 16 8s16-3.582 16-8M8 14c0-4.418 7.163-8 16-8s16 3.582 16 8m0 0v14m0-4c0 4.418-7.163 8-16 8S8 28.418 8 24m32 10v6m0 0v6m0-6h6m-6 0h-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
-                                <div class="flex text-sm text-gray-600">
+                                <div class="flex justify-center text-sm text-gray-600">
                                     <label for="bukti_keanggotaan" class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
                                         <span>Upload file</span>
                                         <input 
