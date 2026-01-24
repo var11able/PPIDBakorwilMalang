@@ -18,13 +18,13 @@ return new class extends Migration
                 ->cascadeOnDelete();
             $table->enum('request_type', ['permohonan', 'keberatan']);
             $table->string('identity_proof');
-            $table->string('address', 50);
+            // $table->string('address', 50);
             $table->string('institution');
             $table->string('proof_institution');
             $table->text('data_request');
             $table->string('phone_number', 20);
             $table->text('complaint')->nullable();
-            $table->enum('status', ['pending', 'diproses', 'disetujui', 'ditolak']);
+            $table->enum('status', ['pending', 'diproses', 'disetujui', 'ditolak'])->default('pending');
             $table->timestamps();
         });
     }

@@ -19,4 +19,8 @@ Route::middleware('guest')->controller(AuthController::class)->group(function ()
     Route::post('/register', 'register')->name('register');
 });
 
-Route::get('/permohonan', [RequestController::class, 'create'])->middleware('auth')->name('request');
+Route::middleware('auth')->controller(RequestController::class)->group(function () {
+    Route::get('/permohonan', 'create')->name('request.create');
+    Route::post('/permohonan', 'store')->name('request.store');
+    Route::get('/keberatan', 'complaint')->name('request.complaint');
+});

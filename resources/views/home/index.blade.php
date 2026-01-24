@@ -62,7 +62,7 @@
 
             <div class="flex justify-center">
                 <a 
-                    href="{{ route('request') }}" 
+                    href="{{ route('request.create') }}" 
                     class="px-10 py-4 bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
                 >
                     Ajukan Permohonan

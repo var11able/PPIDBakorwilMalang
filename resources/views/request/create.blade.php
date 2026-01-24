@@ -38,7 +38,6 @@
                     action="" 
                     method="POST" 
                     enctype="multipart/form-data"
-                    class="dropzone"
                 >
                     @csrf
 
@@ -65,31 +64,58 @@
                             Bukti Identitas (KTP/SIM) <span class="text-red-500">*</span>
                         </label>
                         <div 
-                        class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-blue-400 transition duration-200 @error('bukti_identitas') border-red-500 @enderror"
+                            id="dropzone-identitas"
+                            class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-blue-400 transition duration-200 @error('bukti_identitas') border-red-500 @enderror"
                         >
-                            <div class="space-y-1 text-center">
+                            <div class="space-y-1 text-center w-full">
                                 <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
                                     <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                                 <div class="flex justify-center text-sm text-gray-600">
-                                    <label for="bukti_identitas" class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
+                                    <label for="bukti_identitas" class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500">
                                         <span>Upload file</span>
                                         <input 
                                             id="bukti_identitas" 
-                                            name="bukti_identitas"
+                                            name="bukti_identitas" 
                                             type="file" 
                                             class="sr-only"
                                             accept="image/*"
                                             required
-                                            onchange="displayFileName(this, 'identitas-name')"
+                                            onchange="handleFileUpload(this, 'identitas')"
                                         >
                                     </label>
                                     <p class="pl-1">atau drag and drop</p>
                                 </div>
                                 <p class="text-xs text-gray-500">PNG, JPG, JPEG maksimal 1MB</p>
-                                <p id="identitas-name" class="text-sm text-blue-600 font-medium mt-2"></p>
                             </div>
                         </div>
+                        
+                        {{-- File Preview (Hidden by default) --}}
+                        <div id="preview-identitas" class="hidden mt-3 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <div class="flex-shrink-0">
+                                        <svg class="w-8 h-8 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p id="filename-identitas" class="text-sm font-medium text-gray-900"></p>
+                                        <p id="filesize-identitas" class="text-xs text-gray-500"></p>
+                                    </div>
+                                </div>
+                                <button 
+                                    type="button"
+                                    onclick="removeFile('identitas')"
+                                    class="text-red-600 hover:text-red-800 p-2 hover:bg-red-50 rounded-lg transition-colors"
+                                >
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        
                         @error('bukti_identitas')
                             <p class="text-red-500 text-xs mt-1 flex items-center">
                                 <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
@@ -129,13 +155,16 @@
                         <label for="bukti_keanggotaan" class="block text-sm font-semibold text-gray-700 mb-2">
                             Bukti Keanggotaan Instansi <span class="text-red-500">*</span>
                         </label>
-                        <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-blue-400 transition duration-200 @error('bukti_keanggotaan') border-red-500 @enderror">
-                            <div class="space-y-1 text-center">
+                        <div 
+                            id="dropzone-keanggotaan"
+                            class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-blue-400 transition duration-200 @error('bukti_keanggotaan') border-red-500 @enderror"
+                        >
+                            <div class="space-y-1 text-center w-full">
                                 <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
                                     <path d="M8 14v20c0 4.418 7.163 8 16 8 1.381 0 2.721-.087 4-.252M8 14c0 4.418 7.163 8 16 8s16-3.582 16-8M8 14c0-4.418 7.163-8 16-8s16 3.582 16 8m0 0v14m0-4c0 4.418-7.163 8-16 8S8 28.418 8 24m32 10v6m0 0v6m0-6h6m-6 0h-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                 </svg>
                                 <div class="flex justify-center text-sm text-gray-600">
-                                    <label for="bukti_keanggotaan" class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
+                                    <label for="bukti_keanggotaan" class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500">
                                         <span>Upload file</span>
                                         <input 
                                             id="bukti_keanggotaan" 
@@ -143,15 +172,41 @@
                                             type="file" 
                                             class="sr-only"
                                             required
-                                            onchange="displayFileName(this, 'keanggotaan-name')"
+                                            onchange="handleFileUpload(this, 'keanggotaan')"
                                         >
                                     </label>
                                     <p class="pl-1">atau drag and drop</p>
                                 </div>
                                 <p class="text-xs text-gray-500">PDF, DOC, DOCX, JPG, PNG maksimal 10MB</p>
-                                <p id="keanggotaan-name" class="text-sm text-blue-600 font-medium mt-2"></p>
                             </div>
                         </div>
+                        
+                        {{-- File Preview (Hidden by default) --}}
+                        <div id="preview-keanggotaan" class="hidden mt-3 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <div class="flex-shrink-0">
+                                        <svg class="w-8 h-8 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p id="filename-keanggotaan" class="text-sm font-medium text-gray-900"></p>
+                                        <p id="filesize-keanggotaan" class="text-xs text-gray-500"></p>
+                                    </div>
+                                </div>
+                                <button 
+                                    type="button"
+                                    onclick="removeFile('keanggotaan')"
+                                    class="text-red-600 hover:text-red-800 p-2 hover:bg-red-50 rounded-lg transition-colors"
+                                >
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        
                         <p class="text-xs text-gray-500 mt-2">
                             Contoh: Surat tugas, kartu anggota, atau surat keterangan dari instansi
                         </p>
@@ -300,15 +355,89 @@
         </div>
     </div>
 
-    {{-- JavaScript for file name display --}}
     <script>
-        function displayFileName(input, displayId) {
-            const display = document.getElementById(displayId);
-            if (input.files && input.files[0]) {
-                const fileName = input.files[0].name;
-                const fileSize = (input.files[0].size / 1024 / 1024).toFixed(2); // MB
-                display.textContent = `📄 ${fileName} (${fileSize} MB)`;
+    // Handle file upload (from input or drag & drop)
+        function handleFileUpload(input, type) {
+            const file = input.files[0];
+            if (file) {
+                displayFilePreview(file, type);
             }
+        }
+
+        // Display file preview
+        function displayFilePreview(file, type) {
+            const fileName = file.name;
+            const fileSize = (file.size / 1024 / 1024).toFixed(2); // MB
+            
+            // Update preview elements
+            document.getElementById(`filename-${type}`).textContent = fileName;
+            document.getElementById(`filesize-${type}`).textContent = `${fileSize} MB`;
+            
+            // Show preview, hide dropzone content
+            document.getElementById(`preview-${type}`).classList.remove('hidden');
+            document.getElementById(`dropzone-${type}`).classList.add('hidden');
+        }
+
+        // Remove file
+        function removeFile(type) {
+            // Clear input file
+            const input = document.getElementById(type === 'identitas' ? 'bukti_identitas' : 'bukti_keanggotaan');
+            input.value = '';
+            
+            // Hide preview, show dropzone
+            document.getElementById(`preview-${type}`).classList.add('hidden');
+            document.getElementById(`dropzone-${type}`).classList.remove('hidden');
+        }
+
+        // Setup drag & drop for all dropzones
+        document.addEventListener('DOMContentLoaded', function() {
+            setupDragAndDrop('identitas');
+            setupDragAndDrop('keanggotaan');
+        });
+
+        function setupDragAndDrop(type) {
+            const dropzone = document.getElementById(`dropzone-${type}`);
+            const input = document.getElementById(type === 'identitas' ? 'bukti_identitas' : 'bukti_keanggotaan');
+            
+            // Prevent default drag behaviors
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropzone.addEventListener(eventName, preventDefaults, false);
+                document.body.addEventListener(eventName, preventDefaults, false);
+            });
+            
+            // Highlight drop area when dragging over it
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropzone.addEventListener(eventName, () => {
+                    dropzone.classList.add('border-blue-500', 'bg-blue-50');
+                }, false);
+            });
+            
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropzone.addEventListener(eventName, () => {
+                    dropzone.classList.remove('border-blue-500', 'bg-blue-50');
+                }, false);
+            });
+            
+            // Handle dropped files
+            dropzone.addEventListener('drop', function(e) {
+                const dt = e.dataTransfer;
+                const file = dt.files[0];
+                
+                if (file) {
+                    // Set file to input
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(file);
+                    input.files = dataTransfer.files;
+                    
+                    // Display preview
+                    displayFilePreview(file, type);
+                }
+            }, false);
+        }
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
         }
     </script>
 
