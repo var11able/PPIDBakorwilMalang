@@ -7,6 +7,15 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * @property int $id
+ * @property string $email
+ * @property string $fullName
+ * @property string $role
+ * @property \Illuminate\Support\Carbon|null $email_verified_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
@@ -45,7 +54,8 @@ class User extends Authenticatable
         ];
     }
 
-    public function request() {
+    public function request()
+    {
         return $this->hasMany(InformationRequest::class);
     }
 }
