@@ -23,7 +23,7 @@ class RequestController extends Controller
             'identity_proof' => 'required|image|mimes:jpg,jpeg,png|max:2048',
             'institution' => 'required|string|max:255',
             'proof_institution' => 'required|mimes:pdf|max:4096',
-            'data_request' => 'required|string|min:30|max:1000',
+            'data_request' => 'required|string|max:1000',
             'phone_number' => 'required|string|min:10|max:20'
         ], [
             'identity_proof.required' => 'Bukti identitas wajib diunggah.',
@@ -43,11 +43,9 @@ class RequestController extends Controller
         $userId = auth()->id();
         $timestamp = time();
 
-        // Upload identity proof (KTP/SIM)
         $identityPath = $request->file('identity_proof')
             ->storeAs('ppid/identity', "{$userId}_{$timestamp}_identity." . $request->file('identity_proof')->extension(), 'public');
 
-        // Upload institution proof (PDF)
         $institutionPath = $request->file('proof_institution')
             ->storeAs('ppid/institution', "{$userId}_{$timestamp}_institution." . $request->file('proof_institution')->extension(), 'public');
 
@@ -63,5 +61,50 @@ class RequestController extends Controller
         ]);
 
         return redirect()->route('request.create')->with('success', 'Permohonan informasi berhasil dikirim! Kami akan memproses dalam 10 hari kerja.');
+    }
+
+    public function showComplaint($parentId)
+    {
+        $parentRequest = InformationRequest::where('id', $parentId)
+            ->where('user_id', auth()->id())
+            ->where('request_type', 'permohonan')
+            ->where('status', 'ditolak')
+            ->whereDoesntHave('objection')
+            ->firstOrFail();
+
+        return view('request.complaint-form', compact('parentRequest'));
+    }
+
+    public function storeComplaint(Request $request, $parentId)
+    {
+        $parentRequest = InformationRequest::where('id', $parentId)
+            ->where('user_id', auth()->id())
+            ->where('request_type', 'permohonan')
+            ->where('status', 'ditolak')
+            ->whereDoesntHave('objection')
+            ->firstOrFail();
+
+        $validated = $request->validate([
+            'complaint' => 'required|string|min:30|max:1000',
+        ], [
+            'complaint.required' => 'Alasan keberatan wajib diisi.',
+            'complaint.min' => 'Alasan keberatan minimal 30 karakter.',
+            'complaint.max' => 'Alasan keberatan maksimal 1000 karakter.',
+        ]);
+
+        InformationRequest::create([
+            'user_id' => auth()->id(),
+            'request_type' => 'keberatan',
+            'identity_proof' => $parentRequest->identity_proof,
+            'institution' => $parentRequest->institution,
+            'proof_institution' => $parentRequest->proof_institution,
+            'data_request' => $parentRequest->data_request,
+            'phone_number' => $parentRequest->phone_number,
+            'complaint' => $validated['complaint'],
+            'status' => 'pending',
+            'parent_request_id' => $parentRequest->id,
+        ]);
+
+        return redirect()->route('user.history')->with('success', 'Keberatan berhasil diajukan! Kami akan memproses dalam 10 hari kerja.');
     }
 }

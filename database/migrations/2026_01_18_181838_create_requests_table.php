@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -18,13 +17,17 @@ return new class extends Migration
                 ->cascadeOnDelete();
             $table->enum('request_type', ['permohonan', 'keberatan']);
             $table->string('identity_proof');
-            // $table->string('address', 50);
             $table->string('institution');
             $table->string('proof_institution');
             $table->text('data_request');
             $table->string('phone_number', 20);
             $table->text('complaint')->nullable();
             $table->enum('status', ['pending', 'diproses', 'disetujui', 'ditolak'])->default('pending');
+            $table->text('rejection_reason')->nullable();
+            $table->foreignId('parent_request_id')
+                ->nullable()
+                ->constrained('requests')
+                ->cascadeOnDelete();
             $table->timestamps();
         });
     }
