@@ -29,6 +29,7 @@ class User extends Authenticatable
         'email',
         'password',
         'fullName',
+        'role',
     ];
 
     /**
@@ -54,8 +55,28 @@ class User extends Authenticatable
         ];
     }
 
-    public function request()
+    public function requests()
     {
         return $this->hasMany(InformationRequest::class);
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isStaff(): bool
+    {
+        return $this->role === 'staff';
+    }
+
+    public function isUser(): bool
+    {
+        return $this->role === 'user';
+    }
+
+    public function isAdminOrStaff(): bool
+    {
+        return in_array($this->role, ['admin', 'staff']);
     }
 }
