@@ -24,7 +24,8 @@
                 $isActive = str_starts_with($currentRoute, explode('.index', $item['route'])[0]);
             @endphp
             <a href="{{ route($item['route']) }}"
-                class="flex items-center px-4 py-3 rounded-lg transition-colors duration-200 {{ $isActive ? 'bg-blue-800 text-white' : 'text-blue-100 hover:bg-blue-600' }}">
+                onclick="window.location.href=this.href; return true;"
+                class="flex items-center px-4 py-3 rounded-lg transition-colors duration-200 cursor-pointer {{ $isActive ? 'bg-blue-800 text-white' : 'text-blue-100 hover:bg-blue-600' }}">
                 @switch($item['icon'])
                     @case('home')
                         <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -61,6 +62,17 @@
                 {{ $item['label'] }}
             </a>
         @endforeach
+
+        <div class="pt-4 border-t border-blue-600 mt-4">
+            <a href="{{ route('home') }}"
+                onclick="window.location.href=this.href; return true;"
+                class="flex items-center px-4 py-3 rounded-lg text-blue-100 hover:bg-blue-600 transition-colors duration-200 cursor-pointer">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Kembali ke Beranda
+            </a>
+        </div>
     </nav>
 
     <div class="p-4 border-t border-blue-600">

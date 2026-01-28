@@ -45,13 +45,17 @@
         @endforeach
 
         <div class="pt-4 border-t border-blue-600 mt-4">
-            <a href="{{ route('request.create') }}" class="flex items-center px-4 py-3 rounded-lg text-blue-100 hover:bg-blue-600 transition-colors duration-200">
+            <a href="{{ route('request.create') }}"
+                onclick="window.location.href=this.href; return true;"
+                class="flex items-center px-4 py-3 rounded-lg text-blue-100 hover:bg-blue-600 transition-colors duration-200 cursor-pointer">
                 <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                 </svg>
                 Ajukan Permohonan
             </a>
-            <a href="{{ route('home') }}" class="flex items-center px-4 py-3 rounded-lg text-blue-100 hover:bg-blue-600 transition-colors duration-200">
+            <a href="{{ route('home') }}"
+                onclick="window.location.href=this.href; return true;"
+                class="flex items-center px-4 py-3 rounded-lg text-blue-100 hover:bg-blue-600 transition-colors duration-200 cursor-pointer">
                 <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
