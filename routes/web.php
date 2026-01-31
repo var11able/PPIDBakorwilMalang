@@ -25,38 +25,51 @@ Route::middleware('guest')->controller(AuthController::class)->group(function ()
     Route::post('/register', 'register')->name('register');
 });
 
-Route::middleware('auth')->controller(RequestController::class)->group(function () {
-    Route::get('/permohonan', 'create')->name('request.create');
-    Route::post('/permohonan', 'store')->name('request.store');
-    Route::get('/keberatan', 'complaint')->name('request.complaint');
-    Route::get('/keberatan/{parentId}', 'showComplaint')->name('request.complaint.form');
-    Route::post('/keberatan/{parentId}', 'storeComplaint')->name('request.complaint.store');
-});
+Route::middleware('auth')->group(function () {
+    Route::controller(RequestController::class)->group(function() {
+        Route::get('/permohonan', 'create')->name('request.create');
+        Route::post('/permohonan', 'store')->name('request.store');
+        Route::get('/keberatan', 'complaint')->name('request.complaint');
+        Route::get('/keberatan/{parentId}', 'showComplaint')->name('request.complaint.form');
+        Route::post('/keberatan/{parentId}', 'storeComplaint')->name('request.complaint.store');
+    });
 
-Route::prefix('admin')->middleware(['auth', 'role:admin,staff'])->group(function () {
-    Route::get('/', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+    Route::prefix('dashboard')->group(function() {
+        Route::controller(UserDashboardController::class)->group(function() {
+            Route::get('/', 'index')->name('user.dashboard');
+            Route::get('/history', 'history')->name('user.history');
+            Route::get('/history/{id}', 'show')->name('user.request.show');
+        });
+    
+        Route::controller(ProfileController::class)->group(function() {
+            Route::get('/profile', 'edit')->name('profile.edit');
+            Route::put('/profile', 'update')->name('profile.update');
+        });
+    });
 
-    Route::get('/requests', [AdminRequestController::class, 'index'])->name('admin.requests.index');
-    Route::get('/requests/{id}', [AdminRequestController::class, 'show'])->name('admin.requests.show');
-    Route::put('/requests/{id}', [AdminRequestController::class, 'update'])->name('admin.requests.update');
+    Route::prefix('admin')->middleware('role:admin,staff')->group(function() {
+        Route::get('/', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
 
-    Route::get('/documents', [AdminDocumentController::class, 'index'])->name('admin.documents.index');
+        Route::controller(AdminRequestController::class)->group(function() {
+            Route::get('/requests', 'index')->name('admin.requests.index');
+            Route::get('/requests/{id}', 'show')->name('admin.requests.show');
+            Route::put('/requests/{id}', 'update')->name('admin.requests.update');
+        });
 
-    Route::get('/users', [AdminUserController::class, 'index'])->name('admin.users.index');
-    Route::get('/users/{id}', [AdminUserController::class, 'show'])->name('admin.users.show');
+        Route::get('/documents', [AdminDocumentController::class, 'index'])->name('admin.documents.index');
+        Route::get('/reports', [AdminReportController::class, 'index'])->name('admin.reports.index');
 
-    Route::get('/reports', [AdminReportController::class, 'index'])->name('admin.reports.index');
+        Route::controller(AdminUserController::class)->group(function() {
+            Route::get('/users', 'index')->name('admin.users.index');
+            Route::get('/users/{id}', 'show')->name('admin.users.show');
+        });
 
-    Route::get('/settings', [AdminSettingController::class, 'index'])->name('admin.settings.index');
-    Route::put('/settings', [AdminSettingController::class, 'update'])->name('admin.settings.update');
-});
+        Route::controller(AdminSettingController::class)->group(function() {
+            Route::get('/settings', 'index')->name('admin.settings.index');
+            Route::put('/settings', 'update')->name('admin.settings.update');
+        });
+    });
 
-Route::prefix('dashboard')->middleware('auth')->group(function () {
-    Route::get('/', [UserDashboardController::class, 'index'])->name('user.dashboard');
-    Route::get('/history', [UserDashboardController::class, 'history'])->name('user.history');
-    Route::get('/history/{id}', [UserDashboardController::class, 'show'])->name('user.request.show');
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 });
 
 Route::get('{prefix}/{slug}', [PageController::class, 'show']);

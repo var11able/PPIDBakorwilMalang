@@ -10,7 +10,14 @@
             </p>
         </div>
 
-        <img src="https://picsum.photos/id/177/800/600" alt="logo?">
+        <div class="overflow-hidden rounded-lg shadow-2xl">
+            <img 
+                src="{{ asset('img/content/bakorwil.webp') }}" 
+                loading="lazy"
+                alt="welcome pic" 
+                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+            >
+        </div>
     </div>
 
     <div class="bg-blue-200 py-12 px-4 sm:px-6 lg:px-8">
