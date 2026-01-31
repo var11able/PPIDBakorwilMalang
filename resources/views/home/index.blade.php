@@ -83,20 +83,18 @@
         <p class="text-3xl font-bold text-white my-6">
             Galeri PPID
         </p>
-        <div class="flex flex-wrap justify-center sm:gap-5 sm:px-8">
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                @foreach ($contents->take(3) as $content)
-                    <div class="overflow-hidden rounded-lg shadow-2xl h-64 sm:h-80 lg:h-96 group">
-                        <img 
-                            src="{{ asset('img/content/' . $content['image']) }}" 
-                            loading="lazy"
-                            alt="Galeri PPID {{ $loop->iteration }}"
-                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                        >
-                    </div>
-                @endforeach
-            </div>
+        <div class="flex flex-wrap justify-center gap-6 mx-5 xl:m-0">
+            @foreach ($contents as $content)
+                <div class="overflow-hidden rounded shadow-2xl h-64 sm:h-80 lg:h-96 w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]">
+                    <img 
+                        src="{{ asset('img/content/' . $content['image']) }}" 
+                        loading="lazy"
+                        alt="Galeri PPID {{ $loop->iteration }}" 
+                        class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                    >
+                </div>
+            @endforeach
+        </div>
             
             <div class="text-center mt-10">
                 <a 
@@ -108,10 +106,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                     </svg>
                 </a>
-            </div>
-
-
-        </div>  
+            </div> 
     </div>
 
 
