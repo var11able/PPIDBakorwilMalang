@@ -14,21 +14,12 @@ class ContentSeeder extends Seeder
     public function run(): void
     {
         $contents = [
-            [
-                'image_url' => 'https://picsum.photos/id/67/800/600'
-            ],
-            [
-                'image_url' => 'https://picsum.photos/id/288/800/600'
-            ],
-            [
-                'image_url' => 'https://picsum.photos/id/444/800/600'
-            ],
-            [
-                'image_url' => 'https://picsum.photos/id/333/800/600'
-            ],
-            [
-                'image_url' => 'https://picsum.photos/id/234/800/600'
-            ],
+            ['image' => 'bkw1.webp'],
+            ['image' => 'bkw2.webp'],
+            ['image' => 'bkw3.webp'],
+            ['image' => 'bkw4.webp'],
+            ['image' => 'bkw5.webp'],
+            ['image' => 'bkw6.webp'],
         ];
 
         foreach($contents as $content) {

@@ -18,7 +18,7 @@
                 class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
             >
         </div>
-    </div>
+    </div>  
 
     <div class="bg-blue-200 py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-4xl mx-auto">
@@ -80,16 +80,35 @@
     </div>
 
     <div class="px-5 py-2">
-        <p class="text-3xl font-bold text-white my-3">
+        <p class="text-3xl font-bold text-white my-6">
             Galeri PPID
         </p>
         <div class="flex flex-wrap justify-center sm:gap-5 sm:px-8">
 
-            {{-- pr --}}
-
-            {{-- @foreach ( $contents as $content )
-                <img src="{{ $content->image_url }}" alt="galeri" class="w-full sm:w-[calc(50%-0.625rem)]">
-            @endforeach --}}
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                @foreach ($contents->take(3) as $content)
+                    <div class="overflow-hidden rounded-lg shadow-2xl h-64 sm:h-80 lg:h-96 group">
+                        <img 
+                            src="{{ asset('img/content/' . $content['image']) }}" 
+                            loading="lazy"
+                            alt="Galeri PPID {{ $loop->iteration }}"
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        >
+                    </div>
+                @endforeach
+            </div>
+            
+            <div class="text-center mt-10">
+                <a 
+                    href="{{ route('gallery.index') }}" 
+                    class="inline-flex items-center gap-2 px-8 py-3 bg-white text-blue-700 font-semibold rounded-lg hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl"
+                >
+                    <span>Lihat Semua Galeri</span>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                    </svg>
+                </a>
+            </div>
 
 
         </div>  

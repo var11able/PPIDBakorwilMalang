@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\AdminDocumentController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminReportController;
 use App\Http\Controllers\Admin\AdminSettingController;
+use App\Http\Controllers\ContentController;
 use App\Http\Controllers\User\UserDashboardController;
 use App\Http\Controllers\User\ProfileController;
 
@@ -73,3 +74,5 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('{prefix}/{slug}', [PageController::class, 'show']);
+
+Route::get('/gallery', [ContentController::class, 'index'])->name('gallery.index');

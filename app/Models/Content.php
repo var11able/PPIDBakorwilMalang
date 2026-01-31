@@ -9,7 +9,8 @@ class Content extends Model
 {
     /** @use HasFactory<\Database\Factories\ContentFactory> */
     use HasFactory;
+
     protected $fillable = [
-        'image_url'
+        'image'
     ];
 }
