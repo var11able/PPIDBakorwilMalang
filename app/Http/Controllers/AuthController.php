@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use App\Http\Controllers\VerificationController;
+use App\Notifications\VerificationCodeNotification;
 
 class AuthController extends Controller
 {
@@ -38,17 +40,23 @@ class AuthController extends Controller
             'agreement.accepted' => 'Anda harus menyetujui persetujuan pemrosesan data.',
         ]);
 
+        $code = VerificationController::generateCode();
+
         $user = User::create([
             'fullName' => $validated['fullName'],
             'email' => $validated['email'],
             'password' => $validated['password'],
+            'verification_code' => $code,
+            'verification_code_expires_at' => now()->addMinutes(5),
         ]);
 
         Auth::login($user);
 
+        $user->notify(new VerificationCodeNotification($code));
+
         $request->session()->regenerate();
 
-        return redirect()->route('home')->with('success', 'Registrasi berhasil! Selamat datang.');
+        return redirect()->route('verification.notice');
     }
 
     public function login(Request $request)
@@ -60,6 +68,20 @@ class AuthController extends Controller
 
         if (Auth::attempt($validated, $request->boolean('remember'))) {
             $request->session()->regenerate();
+
+            $user = Auth::user();
+            if (!$user->hasVerifiedEmail()) {
+                // If no verification code exists or expired, generate new one
+                if (!$user->verification_code || now()->isAfter($user->verification_code_expires_at)) {
+                    $code = VerificationController::generateCode();
+                    $user->verification_code = $code;
+                    $user->verification_code_expires_at = now()->addMinutes(5);
+                    $user->save();
+                    $user->notify(new VerificationCodeNotification($code));
+                }
+                return redirect()->route('verification.notice');
+            }
+
             return redirect()->route('home');
         }
 

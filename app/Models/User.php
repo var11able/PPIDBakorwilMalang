@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -16,7 +16,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  */
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
 
@@ -30,6 +30,9 @@ class User extends Authenticatable
         'password',
         'fullName',
         'role',
+        'email_verified_at',
+        'verification_code',
+        'verification_code_expires_at',
     ];
 
     /**
@@ -78,5 +81,10 @@ class User extends Authenticatable
     public function isAdminOrStaff(): bool
     {
         return in_array($this->role, ['admin', 'staff']);
+    }
+
+    public function sendPasswordResetNotification($token): void
+    {
+        $this->notify(new \App\Notifications\ResetPasswordNotification($token));
     }
 }
